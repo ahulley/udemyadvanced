@@ -6,6 +6,8 @@ const passport = require('passport');
 const requireAuth = passport.authenticate('jwt', { session: false });
 const requireSignIn = passport.authenticate('local', { session: false });
 
+const userRoutes = require('./routes/users');
+
 module.exports = function (app) {
 	//Auth'd request -> verify token -> resource access
 	//Signing in -> verify email/pw -> token
@@ -18,4 +20,6 @@ module.exports = function (app) {
 	});
 	app.post('/signin', requireSignIn, Authentication.signin);
 	app.post('/signup', Authentication.signup);
+
+	userRoutes(app);
 }
